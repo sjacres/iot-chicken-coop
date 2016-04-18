@@ -79,3 +79,9 @@ class Navigation(object):
         # Wrap around to the bottom if on the top
         else:
             self._bread_crumb[0] = len(self._branch) - 1
+
+    def reset(self):
+        self._bread_crumb = [0]
+
+        self._loadSelectedBranch()
+
