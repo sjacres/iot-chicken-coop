@@ -9,20 +9,10 @@ class Interface(object):
 
         self._navigation = Navigation()
 
-        self.initScreen()
+        self.refresh()
 
     def abandoned(self):
-        return 300 <= time.time() - self._last_init
-
-    def initScreen(self):
-        self._lcd_plate.clear()
-
-        self._lcd_plate.setBackLightCyan()
-
-        # Set the screen to the top of the menu
-        self._lcd_plate.message(self._navigation.currentItem())
-
-        self._last_init = time.time()
+        return 300 <= time.time() - self._last_refresh
 
     def pressedDown(self):
         self._navigation.moveDown()
@@ -40,6 +30,16 @@ class Interface(object):
 
     def pressedUp(self):
         self._navigation.moveUp()
+
+    def refresh(self):
+        self._lcd_plate.clear()
+
+        self._lcd_plate.setBackLightCyan()
+
+        # Set the screen to the top of the menu
+        self._lcd_plate.message(self._navigation.currentItem())
+
+        self._last_refresh = time.time()
 
     def run(self):
         # Track if we are asleep
@@ -72,4 +72,4 @@ class Interface(object):
                     else:
                         asleep = False
 
-                    self.initScreen()
+                    self.refresh()
