@@ -43,11 +43,16 @@ class LcdPlate(object):
         """
         Once the script exits, then clear the screen & turn it off
         """
-        self._lcd_plate.clear()
-        self._lcd_plate.set_backlight(0)
+        self.clear()
+        self.turnOffBackLight()
 
     def clear(self):
         self._lcd_plate.clear()
+
+    def goToSleep(self):
+        self.clear()
+        self._lcd_plate.message("Sleeping...\nHold any button")
+        self.turnOffBackLight()
 
     def isPressed(self, button):
         if self._lcd_plate.is_pressed(button):
@@ -93,3 +98,7 @@ class LcdPlate(object):
 
     def titleOfButton(self, button):
         return self._buttons[button]['Title']
+
+    def turnOffBackLight(self):
+        self._lcd_plate.set_backlight(0)
+
