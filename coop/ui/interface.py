@@ -47,7 +47,7 @@ class Interface(object):
                 if not asleep:
                     self._lcd_plate.goToSleep()
 
-                    # TODO: Reset navigation to top
+                    self._navigation.reset()
 
                     asleep = True
 
