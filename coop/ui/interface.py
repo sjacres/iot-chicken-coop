@@ -11,6 +11,9 @@ class Interface(object):
 
         self.initScreen()
 
+    def abandoned(self):
+        return 300 <= time.time() - self._last_init
+
     def initScreen(self):
         self._lcd_plate.clear()
 
@@ -42,8 +45,11 @@ class Interface(object):
         # Track if we are asleep
         asleep = False
 
+        # Continuous loop to keep polling to see if any of the buttons are pressed
         while True:
-            if 300 <= time.time() - self._last_init:
+            # Check to see if there has been no interaction with the screen for a bit
+            if self.abandoned():
+                # If we just discovered that we are abandoned, then put the screen to sleep
                 if not asleep:
                     self._lcd_plate.goToSleep()
 
@@ -54,6 +60,7 @@ class Interface(object):
                 # No reason to poll buttons continuously if asleep, so pause for 5 seconds before checking buttons
                 time.sleep(5)
 
+            # Loop through the buttons
             for button in self._lcd_plate.buttons():
                 # Check if a button is pressed & there has been pause in pressing the buttons
                 if self._lcd_plate.pressedSinceLastCheck(button):
