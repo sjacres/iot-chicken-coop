@@ -3,7 +3,7 @@ from navigation import Navigation
 import time
 
 
-class Interface(object):
+class UserInterface(object):
     def __init__(self):
         self._lcd_plate = LcdPlate()
 

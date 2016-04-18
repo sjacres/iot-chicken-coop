@@ -1,6 +1,6 @@
-from ui.interface import Interface
+from ui.interface import UserInterface
 
 # Make a new interface
-interface = Interface()
+ui = UserInterface()
 
-interface.run()
+ui.run()
