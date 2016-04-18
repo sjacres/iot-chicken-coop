@@ -101,4 +101,3 @@ class LcdPlate(object):
 
     def turnOffBackLight(self):
         self._lcd_plate.set_backlight(0)
-
