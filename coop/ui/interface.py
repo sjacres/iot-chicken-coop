@@ -1,5 +1,6 @@
 from lcdplate import LcdPlate
 from navigation import Navigation
+import time
 
 
 class Interface(object):
@@ -17,6 +18,8 @@ class Interface(object):
 
         # Set the screen to the top of the menu
         self._lcd_plate.message(self._navigation.currentItem())
+
+        self._last_init = time.time()
 
     def pressedDown(self):
         self._navigation.moveDown()
@@ -36,11 +39,30 @@ class Interface(object):
         self._navigation.moveUp()
 
     def run(self):
+        # Track if we are asleep
+        asleep = False
+
         while True:
+            if 300 <= time.time() - self._last_init:
+                if not asleep:
+                    self._lcd_plate.goToSleep()
+
+                    self._navigation.reset()
+
+                    asleep = True
+
+                # No reason to poll buttons continuously if asleep, so pause for 5 seconds before checking buttons
+                time.sleep(5)
+
             for button in self._lcd_plate.buttons():
                 # Check if a button is pressed & there has been pause in pressing the buttons
                 if self._lcd_plate.pressedSinceLastCheck(button):
-                    # Call function of the button pressed
-                    getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
+                    # If we just came out of sleep, ignore that button press
+                    if not asleep:
+                        # Call function of the button pressed
+                        getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
+
+                    else:
+                        asleep = False
 
                     self.initScreen()
