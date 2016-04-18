@@ -1,0 +1,35 @@
+{
+  "IOT Chicken Coop\nRight to start->": {
+    "Doors": {
+      "Run Door": {
+        "Open/Close": {
+          "Open": "openDoor",
+          "Close": "closeDoor"
+        },
+        "Status": "doorStatus",
+        "Enable/Disable": {
+          "Enable": "enableDoor",
+          "Disable": "disable"
+        }
+      },
+      "Outside Door": {
+        "Open/Close": {
+          "Open": "openDoor",
+          "Close": "closeDoor"
+        },
+        "Status": "doorStatus",
+        "Enable/Disable": {
+          "Enable": "enableDoor",
+          "Disable": "disable"
+        }
+      }
+    },
+    "Statuses": {
+      "Uptime": "uptime"
+    },
+    "System": {
+      "Power Off": "powerOff",
+      "Reboot": "reboot"
+    }
+  }
+}
