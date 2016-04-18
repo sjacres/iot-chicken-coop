@@ -11,37 +11,28 @@ class Interface(object):
 
     def _readPressedButton(self):
         for button in self._lcd_plate.buttons():
-            print "Checking button ]" + str(button) + "["
             # Check if a button is pressed & there has been pause in pressing the buttons
             if self._lcd_plate.pressedSinceLastCheck(button):
-                print "New press"
                 # If we just came out of sleep, ignore that button press
                 if not self._asleep:
-                    print "Was not asleep"
                     # Call function of the button pressed
                     getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
 
                 else:
-                    print "Just woke up"
                     self._asleep = False
 
                 self.refresh()
 
     def _sleepIfNeeded(self):
         if self.abandoned():
-            print "Not abandoned"
-
             # If we just discovered that we are abandoned, then put the screen to sleep
             if not self._asleep:
-                print "Just went to sleep"
-
                 self._lcd_plate.goToSleep()
 
                 self._navigation.reset()
 
                 self._asleep = True
 
-            print "sleeping"
             # No reason to poll buttons continuously if asleep, so pause for 5 seconds before checking buttons
             time.sleep(5)
 
