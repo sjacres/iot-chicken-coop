@@ -22,9 +22,11 @@ class Navigation(object):
         for selected in self._bread_crumb[:0:-1]:
             self._branch = self._branch.values()[selected]
 
+        # Maybe at the end of the line, so there will ont be any children
         try:
             # Get the keys for the level that we ended at
             self._branch = self._branch.keys()
+        # Was not, so back up one
         except AttributeError:
             self.moveLeft()
 
@@ -84,4 +86,3 @@ class Navigation(object):
         self._bread_crumb = [0]
 
         self._loadSelectedBranch()
-

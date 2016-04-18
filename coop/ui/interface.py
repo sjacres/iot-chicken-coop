@@ -9,17 +9,35 @@ class Interface(object):
 
         self._navigation = Navigation()
 
-        self.initScreen()
+    def _readPressedButton(self):
+        for button in self._lcd_plate.buttons():
+            # Check if a button is pressed & there has been pause in pressing the buttons
+            if self._lcd_plate.pressedSinceLastCheck(button):
+                # If we just came out of sleep, ignore that button press
+                if not self._asleep:
+                    # Call function of the button pressed
+                    getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
 
-    def initScreen(self):
-        self._lcd_plate.clear()
+                else:
+                    self._asleep = False
 
-        self._lcd_plate.setBackLightCyan()
+                self.refresh()
 
-        # Set the screen to the top of the menu
-        self._lcd_plate.message(self._navigation.currentItem())
+    def _sleepIfNeeded(self):
+        if self.abandoned():
+            # If we just discovered that we are abandoned, then put the screen to sleep
+            if not self._asleep:
+                self._lcd_plate.goToSleep()
 
-        self._last_init = time.time()
+                self._navigation.reset()
+
+                self._asleep = True
+
+            # No reason to poll buttons continuously if asleep, so pause for 5 seconds before checking buttons
+            time.sleep(5)
+
+    def abandoned(self):
+        return 300 <= time.time() - self._last_refresh
 
     def pressedDown(self):
         self._navigation.moveDown()
@@ -38,31 +56,26 @@ class Interface(object):
     def pressedUp(self):
         self._navigation.moveUp()
 
+    def refresh(self):
+        self._lcd_plate.clear()
+
+        self._lcd_plate.setBackLightCyan()
+
+        # Set the screen to the top of the menu
+        self._lcd_plate.message(self._navigation.currentItem())
+
+        self._last_refresh = time.time()
+
     def run(self):
-        # Track if we are asleep
-        asleep = False
+        # Track if we are self._asleep
+        self._asleep = False
 
+        self.refresh()
+
+        # Continuous loop to keep polling to see if any of the buttons are pressed
         while True:
-            if 300 <= time.time() - self._last_init:
-                if not asleep:
-                    self._lcd_plate.goToSleep()
+            # Check to see if there has been no interaction with the screen for a bit
+            self._sleepIfNeeded()
 
-                    self._navigation.reset()
-
-                    asleep = True
-
-                # No reason to poll buttons continuously if asleep, so pause for 5 seconds before checking buttons
-                time.sleep(5)
-
-            for button in self._lcd_plate.buttons():
-                # Check if a button is pressed & there has been pause in pressing the buttons
-                if self._lcd_plate.pressedSinceLastCheck(button):
-                    # If we just came out of sleep, ignore that button press
-                    if not asleep:
-                        # Call function of the button pressed
-                        getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
-
-                    else:
-                        asleep = False
-
-                    self.initScreen()
+            # Loop through the buttons
+            self._readPressedButton()
