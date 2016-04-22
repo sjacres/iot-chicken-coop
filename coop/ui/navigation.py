@@ -1,5 +1,6 @@
 import collections
 import json
+import os
 
 
 class Navigation(object):
@@ -22,7 +23,7 @@ class Navigation(object):
     def _loadNavigation(self):
         """ Load the menu selection from json file
         """
-        self._tree = json.load(open('ui/navigation.json'), object_pairs_hook=collections.OrderedDict)
+        self._tree = json.load(open(os.path.dirname(__file__) + '/navigation.json'), object_pairs_hook=collections.OrderedDict)
 
     def _loadSelectedBranch(self):
         """ Make the list of the items in the current branch
