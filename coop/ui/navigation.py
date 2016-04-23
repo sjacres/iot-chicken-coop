@@ -9,16 +9,16 @@ class Navigation(object):
     The items are stored in a json file so that there can be an unlimited number of branches, where a branch is the
     child selections of an item.
     """
-
-    # Record indices of the items selected in the navigation with newest on the left & oldest on the right
-    _bread_crumb = [0]
-
-    def __init__(self):
+    def __init__(self, tree = None):
         """ Load the navigation from the json file & pick the first branch
         """
-        self._loadNavigation()
 
-        self._loadSelectedBranch()
+        if None == tree:
+            self._loadNavigation()
+        else:
+            self._tree = tree
+
+        self.reset()
 
     def _loadNavigation(self):
         """ Load the menu selection from json file
