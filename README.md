@@ -23,6 +23,13 @@ interact with the pi.  They will be mainly written in python, which
 until this project, I have never writen a single line. I am a PHP developer, and I use
 [Laravel](https://www.laravel.com).
 
+## Build Status
+
+| Branch | Status | Coverage |
+| ------ | :----: | :------: |
+| Develop | [![Build Status](https://travis-ci.org/sjacres/iot-chicken-coop.svg?branch=develop)](https://travis-ci.org/sjacres/iot-chicken-coop) | [![Coverage Status](https://coveralls.io/repos/sjacres/iot-chicken-coop/badge.svg?branch=develop&service=github)](https://coveralls.io/github/sjacres/iot-chicken-coop?branch=develop) |
+| Master | [![Build Status](https://travis-ci.org/sjacres/iot-chicken-coop.svg?branch=master)](https://travis-ci.org/sjacres/iot-chicken-coop) | [![Coverage Status](https://coveralls.io/repos/sjacres/iot-chicken-coop/badge.svg?branch=master&service=github)](https://coveralls.io/github/sjacres/iot-chicken-coop?branch=master) |
+
 ## Hardware
 
 This is a list of the major hardware components that I am using:
