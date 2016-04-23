@@ -1,4 +1,3 @@
-Coop
 coverage==4.0.3
 pytest==2.9.1
 pytest-cov==2.2.1
