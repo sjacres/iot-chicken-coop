@@ -21,7 +21,9 @@ sudo: false
 before_install:
   - pip install pytest coverage
 
-script: py.test
+script:
+  - py.test --cov=coop
+  #- py.test coveralls/tests.py --pep8 coveralls -v --cov coveralls --cov-report term-missing
 
 after_success:
   - coveralls
