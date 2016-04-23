@@ -19,7 +19,7 @@ matrix:
 sudo: false
 
 before_install:
-  - pip install pytest coverage
+  - pip install pytest pytest-cov coverage
 
 script:
   - py.test --cov=coop
