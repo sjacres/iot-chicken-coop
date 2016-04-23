@@ -89,7 +89,10 @@ class Navigation(object):
         :return:
             string: Current item from the branch
         """
-        return self._branch[self.currentItemIndex()]
+        try:
+            return self._branch[self.currentItemIndex()]
+        except IndexError:
+            return ""
 
     def currentItemIndex(self):
         """ The first item in the bread crumb
