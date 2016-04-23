@@ -20,12 +20,10 @@ sudo: false
 
 before_install:
   - pip install -r requirements.txt
+  - pip install pytest coverage
   - pip install coveralls
-#  - pip install pytest pytest-cov coverage
 
 script:
-  #- py.test --cov=coop
-  #- py.test coveralls/tests.py --pep8 coveralls -v --cov coveralls --cov-report term-missing
   - coverage run --source=coop setup.py test
 
 after_success:
