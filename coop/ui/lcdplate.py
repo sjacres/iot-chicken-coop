@@ -31,13 +31,17 @@ class LcdPlate(object):
         },
     }
 
-    def __init__(self):
+    def __init__(self, lcd_plate=None):
         """ Build out an Adafruit LCD Plate Object
 
         In order to clean up the display on exit of the object, registers an "at exit" event method to clean up.
 
         """
-        self._lcd_plate = LCD.Adafruit_CharLCDPlate()
+
+        if None == lcd_plate:
+            self._lcd_plate = LCD.Adafruit_CharLCDPlate()
+        else:
+            self._lcd_plate = lcd_plate
 
         # Make sure to clean up when exiting
         atexit.register(self.cleanUp)
