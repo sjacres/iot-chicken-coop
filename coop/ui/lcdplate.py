@@ -7,29 +7,6 @@ class LcdPlate(object):
 
     Add some sugar to the Adafruit library to make interacting with the plate a little easier
     """
-    # Make list of button value, text
-    _buttons = {
-        LCD.SELECT: {
-            'Pressed': False,
-            'Title': 'Select',
-        },
-        LCD.LEFT: {
-            'Pressed': False,
-            'Title': 'Left',
-        },
-        LCD.UP: {
-            'Pressed': False,
-            'Title': 'Up',
-        },
-        LCD.DOWN: {
-            'Pressed': False,
-            'Title': 'Down',
-        },
-        LCD.RIGHT: {
-            'Pressed': False,
-            'Title': 'Right',
-        },
-    }
 
     def __init__(self, lcd_plate=None):
         """ Build out an Adafruit LCD Plate Object
@@ -42,6 +19,30 @@ class LcdPlate(object):
             self._lcd_plate = LCD.Adafruit_CharLCDPlate()
         else:
             self._lcd_plate = lcd_plate
+
+        # Make list of button value, text
+        self._buttons = {
+            LCD.SELECT: {
+                'Pressed': False,
+                'Title': 'Select',
+            },
+            LCD.LEFT: {
+                'Pressed': False,
+                'Title': 'Left',
+            },
+            LCD.UP: {
+                'Pressed': False,
+                'Title': 'Up',
+            },
+            LCD.DOWN: {
+                'Pressed': False,
+                'Title': 'Down',
+            },
+            LCD.RIGHT: {
+                'Pressed': False,
+                'Title': 'Right',
+            },
+        }
 
         # Make sure to clean up when exiting
         atexit.register(self.cleanUp)
