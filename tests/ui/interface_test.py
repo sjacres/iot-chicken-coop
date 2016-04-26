@@ -1,7 +1,28 @@
-from coop.ui.interface import UserInterface
+from mock import Mock, patch
 import pytest
 
-@pytest.fixture()
-def userinterface(request):
+# Setup the mock object
+MockAdafruit_CharLCD = Mock()
+# Set the values for the constants on the mock object
+MockAdafruit_CharLCD.SELECT = 'SELECT'
+MockAdafruit_CharLCD.LEFT = 'LEFT'
+MockAdafruit_CharLCD.UP = 'UP'
+MockAdafruit_CharLCD.DOWN = 'DOWN'
+MockAdafruit_CharLCD.RIGHT = 'RIGHT'
 
-    return UserInterface()
+
+@pytest.fixture()
+def mock_lcd():
+    mock = Mock()
+
+    return mock
+
+
+# Intercept the import in the LcdPlate since module may not even be available
+@patch.dict('sys.modules', Adafruit_CharLCD=MockAdafruit_CharLCD)
+@pytest.fixture()
+def interface(mock_lcd):
+    # Do import at this place, so that the patch will catch the mocked class
+    from coop.ui.interface import UserInterface
+
+    return UserInterface(mock_lcd)
