@@ -19,9 +19,9 @@ matrix:
 sudo: false
 
 before_install:
-  - pip install -r requirements.txt
-  - pip install pytest pytest-mock coverage
-  - pip install coveralls
+  - pip install -r requirements.txt -U
+  - pip install pytest pytest-mock coverage -U
+  - pip install coveralls -U
 
 script:
   - coverage run --source=coop setup.py test
