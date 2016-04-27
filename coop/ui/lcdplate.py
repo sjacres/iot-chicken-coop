@@ -15,7 +15,7 @@ class LcdPlate(object):
 
         """
 
-        if None == lcd_plate:
+        if lcd_plate is None:
             self._lcd_plate = LCD.Adafruit_CharLCDPlate()
         else:
             self._lcd_plate = lcd_plate
@@ -45,9 +45,9 @@ class LcdPlate(object):
         }
 
         # Make sure to clean up when exiting
-        atexit.register(self.cleanUp)
+        atexit.register(self.clean_up)
 
-    def beenPressed(self, button):
+    def been_pressed(self, button):
         """ Check to see if the button was down the last time it was checked
 
         :param button:
@@ -68,27 +68,27 @@ class LcdPlate(object):
         """
         return self._buttons.keys()
 
-    def cleanUp(self):
+    def clean_up(self):
         """ Once the script exits, then clear the screen & turn it off
         """
         self.clear()
-        self.turnOffBackLight()
+        self.turn_off_back_light()
 
     def clear(self):
         """ Clear the screen
         """
         self._lcd_plate.clear()
 
-    def goToSleep(self):
+    def go_to_sleep(self):
         """ Put the screen asleep
 
         Turn off the back light & display a message to press any button to wake it up
         """
         self.clear()
         self._lcd_plate.message("Sleeping...\nHold any button")
-        self.turnOffBackLight()
+        self.turn_off_back_light()
 
-    def isPressed(self, button):
+    def is_pressed(self, button):
         """ Check to see if the passed in button is pressed
 
         Since there is no way to know if a person is holding the button down from the Adafruit library, we keep up the
@@ -119,7 +119,7 @@ class LcdPlate(object):
         """
         self._lcd_plate.message(text)
 
-    def pressedSinceLastCheck(self, button):
+    def pressed_since_last_check(self, button):
         """ Has the button been pressed since last check
 
         There is no event from the Adafruit library that lets you know when a button was pressed, so you have to poll
@@ -132,52 +132,52 @@ class LcdPlate(object):
         :return:
             bool: True if was not pressed last check, but pressed this time, otherwise, False
         """
-        # Since isPressed will toggle beenPressed, you have to call it first & cache
-        been = self.beenPressed(button)
+        # Since is_pressed will toggle been_pressed, you have to call it first & cache
+        been = self.been_pressed(button)
         # Since the first "False" will trigger the second check to not be ran, then cache
-        currently = self.isPressed(button)
+        currently = self.is_pressed(button)
 
         return not been and currently
 
-    def setBackLightBlue(self):
+    def set_back_light_blue(self):
         """ Set the back light to blue.
         """
         self._lcd_plate.set_color(0.0, 0.0, 1.0)
 
-    def setBackLightCyan(self):
+    def set_back_light_cyan(self):
         """ Set the back light to cyan.
         """
         self._lcd_plate.set_color(0.0, 1.0, 1.0)
 
-    def setBackLightGreen(self):
+    def set_back_light_green(self):
         """ Set the back light to green.
         """
         self._lcd_plate.set_color(0.0, 1.0, 0.0)
 
-    def setBackLightMagenta(self):
+    def set_back_light_magenta(self):
         """ Set the back light to magenta.
         """
         self._lcd_plate.set_color(1.0, 0.0, 1.0)
 
-    def setBackLightRed(self):
+    def set_back_light_red(self):
         """ Set the back light to red.
         """
         self._lcd_plate.set_color(1.0, 0.0, 0.0)
 
-    def setBackLightWhite(self):
+    def set_back_light_white(self):
         """ Set the back light to white.
         """
         self._lcd_plate.set_color(1.0, 1.0, 1.0)
 
-    def setBackLightYellow(self):
+    def set_back_light_yellow(self):
         """ Set the back light to yellow.
         """
         self._lcd_plate.set_color(1.0, 1.0, 0.0)
 
-    def titleOfButton(self, button):
+    def title_of_button(self, button):
         return self._buttons[button]['Title']
 
-    def turnOffBackLight(self):
+    def turn_off_back_light(self):
         """ Turn off the back light.
         """
         self._lcd_plate.set_backlight(0)

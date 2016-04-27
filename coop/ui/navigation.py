@@ -9,23 +9,29 @@ class Navigation(object):
     The items are stored in a json file so that there can be an unlimited number of branches, where a branch is the
     child selections of an item.
     """
-    def __init__(self, tree = None):
+    def __init__(self, tree=None):
         """ Load the navigation from the json file & pick the first branch
         """
 
-        if None == tree:
-            self._loadNavigation()
+        if tree is None:
+            self._load_navigation()
         else:
             self._tree = tree
 
+        # Keep up with the indexes that were selected
+        self._bread_crumb = None
+
         self.reset()
 
-    def _loadNavigation(self):
+    def _load_navigation(self, navigation=None):
         """ Load the menu selection from json file
         """
-        self._tree = json.load(open(os.path.dirname(__file__) + '/navigation.json'), object_pairs_hook=collections.OrderedDict)
+        if navigation is None:
+            navigation = os.path.dirname(__file__) + '/navigation.json'
 
-    def _loadSelectedBranch(self):
+        self._tree = json.load(open(navigation), object_pairs_hook=collections.OrderedDict)
+
+    def _load_selected_branch(self):
         """ Make the list of the items in the current branch
 
         Walk down the bread crumbs to get to the items in the navigation that belong to the previous selection
@@ -43,20 +49,20 @@ class Navigation(object):
             self._branch = self._branch.keys()
         # Was not, so back up one
         except AttributeError:
-            self.moveLeft()
+            self.move_left()
 
-    def atBottomOfBranch(self):
+    def at_bottom_of_branch(self):
         """ Check to see if ar the bottom of the items in the branch
 
         :return:
             bool: True if at the bottom, otherwise False
         """
-        if len(self._branch) - 1 == self.currentItemIndex():
+        if len(self._branch) - 1 == self.current_item_index():
             return True
 
         return False
 
-    def atLevel(self):
+    def at_level(self):
         """ Get the level in the navigation that we are on.
 
         :return:
@@ -64,18 +70,18 @@ class Navigation(object):
         """
         return len(self._bread_crumb)
 
-    def atTopOfBranch(self):
+    def at_top_of_branch(self):
         """ Check to see if ar the top of the items in the branch
 
         :return:
             bool: True if at the top, otherwise False
         """
-        if 0 == self.currentItemIndex():
+        if 0 == self.current_item_index():
             return True
 
         return False
 
-    def currentBranch(self):
+    def current_branch(self):
         """ Getter for the list of the current items
 
         :return:
@@ -83,18 +89,18 @@ class Navigation(object):
         """
         return self._branch
 
-    def currentItem(self):
+    def current_item(self):
         """ Getter for the current items
 
         :return:
             string: Current item from the branch
         """
         try:
-            return self._branch[self.currentItemIndex()]
+            return self._branch[self.current_item_index()]
         except IndexError:
             return ""
 
-    def currentItemIndex(self):
+    def current_item_index(self):
         """ The first item in the bread crumb
 
         :return:
@@ -102,34 +108,34 @@ class Navigation(object):
         """
         return self._bread_crumb[0]
 
-    def moveDown(self):
+    def move_down(self):
         """ Move down in the items in the current branch.
 
         Update the pointer to the next item down in the branch or if already at the bottom, then back up to the top.
         """
-        if not self.atBottomOfBranch():
+        if not self.at_bottom_of_branch():
             self._bread_crumb[0] += 1
         else:
             self._bread_crumb[0] = 0
 
-    def moveLeft(self):
+    def move_left(self):
         """ Move back up the navigation to the item that lead into the branch that we are on.
         """
         if 1 < len(self._bread_crumb):
             self._bread_crumb.pop(0)
-            self._loadSelectedBranch()
+            self._load_selected_branch()
 
-    def moveRight(self):
+    def move_right(self):
         """ Dive into the branch for the current item"""
         self._bread_crumb.insert(0, 0)
-        self._loadSelectedBranch()
+        self._load_selected_branch()
 
-    def moveUp(self):
+    def move_up(self):
         """ Move up in the items in the current branch.
 
         Update the pointer to the previous item up in the branch or if already at the top, then back up to the bottom.
         """
-        if not self.atTopOfBranch():
+        if not self.at_top_of_branch():
             self._bread_crumb[0] -= 1
         else:
             self._bread_crumb[0] = len(self._branch) - 1
@@ -139,4 +145,4 @@ class Navigation(object):
         """
         self._bread_crumb = [0]
 
-        self._loadSelectedBranch()
+        self._load_selected_branch()

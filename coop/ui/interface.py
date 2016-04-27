@@ -9,42 +9,50 @@ class UserInterface(object):
     Boots the application & displays the menu on the LCD for the user to be able to interact with the coop.
     """
 
-    def __init__(self, lcd_plate = None, navigation = None):
+    def __init__(self, lcd_plate=None, navigation=None):
         """ Build out a LCD Plate & Navigation object to use with the interface
         """
-        if None == lcd_plate:
+        if lcd_plate is None:
             self._lcd_plate = LcdPlate()
         else:
             self._lcd_plate = lcd_plate
 
-        if None == navigation:
+        if navigation is None:
             self._navigation = Navigation()
         else:
             self._navigation = navigation
 
-    def _readPressedButton(self):
+        # Track if we are self._asleep
+        self._asleep = False
+
+        # Keep up with last screen refresh to know is need to sleep
+        self._last_refresh = None
+
+        self._abandon_timeout = 300
+
+    def _read_pressed_button(self):
         """ Checks all of the buttons to see if they are pressed & calls the correct function to deal with the button
         """
         for button in self._lcd_plate.buttons():
             # Check if a button is pressed & there has been pause in pressing the buttons
-            if self._lcd_plate.pressedSinceLastCheck(button):
+            if self._lcd_plate.pressed_since_last_check(button):
                 # If we just came out of sleep, ignore that button press
                 if not self._asleep:
                     # Call function of the button pressed
-                    getattr(self, 'pressed' + self._lcd_plate.titleOfButton(button))()
+                    getattr(self, 'pressed_' + self._lcd_plate.title_of_button(button).lower())()
 
                 else:
                     self._asleep = False
 
                 self.refresh()
 
-    def _sleepIfNeeded(self):
+    def _sleep_if_needed(self):
         """ Puts the interface to "sleep" to lower power consumption when not in use
         """
         if self.abandoned():
             # If we just discovered that we are abandoned, then put the screen to sleep
             if not self._asleep:
-                self._lcd_plate.goToSleep()
+                self._lcd_plate.go_to_sleep()
 
                 self._navigation.reset()
 
@@ -59,26 +67,26 @@ class UserInterface(object):
         :return:
             bool: True if abandoned, otherwise False
         """
-        return 300 <= time.time() - self._last_refresh
+        return self._abandon_timeout <= time.time() - self._last_refresh
 
-    def pressedDown(self):
+    def pressed_down(self):
         """ The down button is pressed, so tell navigation to move down one
         """
-        self._navigation.moveDown()
+        self._navigation.move_down()
 
-    def pressedLeft(self):
+    def pressed_left(self):
         """ The left button is pressed, so tell navigation to move back one
         """
 
-        self._navigation.moveLeft()
+        self._navigation.move_left()
 
-    def pressedRight(self):
+    def pressed_right(self):
         """ The right button is pressed, so tell navigation to enter current item
         """
 
-        self._navigation.moveRight()
+        self._navigation.move_right()
 
-    def pressedSelect(self):
+    def pressed_select(self):
         """ The select button is pressed, so process the command for the item
         """
 
@@ -86,11 +94,11 @@ class UserInterface(object):
         self._lcd_plate.clear()
         self._lcd_plate.message("In Select")
 
-    def pressedUp(self):
+    def pressed_up(self):
         """ The up button is pressed, so tell navigation to move up one
         """
 
-        self._navigation.moveUp()
+        self._navigation.move_up()
 
     def refresh(self):
         """ Put the current navigation item on the screen
@@ -98,25 +106,22 @@ class UserInterface(object):
 
         self._lcd_plate.clear()
 
-        self._lcd_plate.setBackLightCyan()
+        self._lcd_plate.set_back_light_cyan()
 
         # Set the screen to the top of the menu
-        self._lcd_plate.message(str(self._navigation.currentItem()))
+        self._lcd_plate.message(str(self._navigation.current_item()))
 
-        # self._last_refresh = time.time()
+        self._last_refresh = time.time()
 
     def run(self):
         """ Continuous loop to keep polling to see if any of the buttons are pressed
         """
 
-        # Track if we are self._asleep
-        self._asleep = False
-
         self.refresh()
 
         while True:
             # Check to see if there has been no interaction with the screen for a bit
-            self._sleepIfNeeded()
+            self._sleep_if_needed()
 
             # Loop through the buttons
-            self._readPressedButton()
+            self._read_pressed_button()

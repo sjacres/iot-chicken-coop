@@ -31,7 +31,7 @@ def lcdplate(mock_lcd):
 def test_knowing_if_a_button_has_been_previously_pressed(lcdplate):
     lcdplate._buttons['SELECT']['Pressed'] = True
 
-    assert True == lcdplate.beenPressed('SELECT')
+    assert True == lcdplate.been_pressed('SELECT')
 
 
 def test_returning_the_button_ids(lcdplate):
@@ -39,7 +39,7 @@ def test_returning_the_button_ids(lcdplate):
 
 
 def test_cleaning_the_screen_clears_it_and_turns_off_backlight(lcdplate):
-    lcdplate.cleanUp()
+    lcdplate.clean_up()
 
     lcdplate._lcd_plate.clear.assert_called_once_with()
     lcdplate._lcd_plate.set_backlight.assert_called_once_with(0)
@@ -52,7 +52,7 @@ def test_clearing_the_screen_tells_the_plate_to_clear(lcdplate):
 
 
 def test_going_to_sleep(lcdplate):
-    lcdplate.goToSleep()
+    lcdplate.go_to_sleep()
 
     lcdplate._lcd_plate.clear.assert_called_once_with()
     lcdplate._lcd_plate.message.assert_called_once_with("Sleeping...\nHold any button")
@@ -63,7 +63,7 @@ def test_it_knows_if_a_button_is_currently_pressed_and_caches_it(lcdplate):
     lcdplate._lcd_plate.is_pressed.return_value = True
 
     assert False == lcdplate._buttons['SELECT']['Pressed']
-    assert True == lcdplate.isPressed('SELECT')
+    assert True == lcdplate.is_pressed('SELECT')
     assert True == lcdplate._buttons['SELECT']['Pressed']
 
 
@@ -72,7 +72,7 @@ def test_it_know_if_a_button_is_not_pressed_and_clears_out_the_cache(lcdplate):
     lcdplate._buttons['SELECT']['Pressed'] = True
 
     assert True == lcdplate._buttons['SELECT']['Pressed']
-    assert False == lcdplate.isPressed('SELECT')
+    assert False == lcdplate.is_pressed('SELECT')
     assert False == lcdplate._buttons['SELECT']['Pressed']
 
 
@@ -86,60 +86,60 @@ def test_it_ignores_a_button_that_is_just_held_down(lcdplate):
     lcdplate._lcd_plate.is_pressed.return_value = True
     lcdplate._buttons['SELECT']['Pressed'] = True
 
-    assert False == lcdplate.pressedSinceLastCheck('SELECT')
+    assert False == lcdplate.pressed_since_last_check('SELECT')
 
 
 def test_sets_the_back_light_to_blue(lcdplate):
-    lcdplate.setBackLightBlue()
+    lcdplate.set_back_light_blue()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(0.0, 0.0, 1.0)
 
 
 def test_sets_the_back_light_to_cyan(lcdplate):
-    lcdplate.setBackLightCyan()
+    lcdplate.set_back_light_cyan()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(0.0, 1.0, 1.0)
 
 
 def test_sets_the_back_light_to_green(lcdplate):
-    lcdplate.setBackLightGreen()
+    lcdplate.set_back_light_green()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(0.0, 1.0, 0.0)
 
 
 def test_sets_the_back_light_to_magenta(lcdplate):
-    lcdplate.setBackLightMagenta()
+    lcdplate.set_back_light_magenta()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(1.0, 0.0, 1.0)
 
 
 def test_sets_the_back_light_to_red(lcdplate):
-    lcdplate.setBackLightRed()
+    lcdplate.set_back_light_red()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(1.0, 0.0, 0.0)
 
 
 def test_sets_the_back_light_to_white(lcdplate):
-    lcdplate.setBackLightWhite()
+    lcdplate.set_back_light_white()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(1.0, 1.0, 1.0)
 
 
 def test_sets_the_back_light_to_yellow(lcdplate):
-    lcdplate.setBackLightYellow()
+    lcdplate.set_back_light_yellow()
 
     lcdplate._lcd_plate.set_color.assert_called_once_with(1.0, 1.0, 0.0)
 
 
 def test_it_returns_the_title_of_a_button(lcdplate):
-    assert 'Select' == lcdplate.titleOfButton('SELECT')
-    assert 'Left' == lcdplate.titleOfButton('LEFT')
-    assert 'Up' == lcdplate.titleOfButton('UP')
-    assert 'Down' == lcdplate.titleOfButton('DOWN')
-    assert 'Right' == lcdplate.titleOfButton('RIGHT')
+    assert 'Select' == lcdplate.title_of_button('SELECT')
+    assert 'Left' == lcdplate.title_of_button('LEFT')
+    assert 'Up' == lcdplate.title_of_button('UP')
+    assert 'Down' == lcdplate.title_of_button('DOWN')
+    assert 'Right' == lcdplate.title_of_button('RIGHT')
 
 
 def test_that_the_back_light_can_be_turned_off(lcdplate):
-    lcdplate.turnOffBackLight()
+    lcdplate.turn_off_back_light()
 
     lcdplate._lcd_plate.set_backlight.assert_called_once_with(0)
