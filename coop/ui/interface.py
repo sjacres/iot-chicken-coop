@@ -101,9 +101,9 @@ class UserInterface(object):
         self._lcd_plate.setBackLightCyan()
 
         # Set the screen to the top of the menu
-        self._lcd_plate.message(self._navigation.currentItem())
+        self._lcd_plate.message(str(self._navigation.currentItem()))
 
-        self._last_refresh = time.time()
+        # self._last_refresh = time.time()
 
     def run(self):
         """ Continuous loop to keep polling to see if any of the buttons are pressed
