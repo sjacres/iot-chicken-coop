@@ -9,12 +9,18 @@ class UserInterface(object):
     Boots the application & displays the menu on the LCD for the user to be able to interact with the coop.
     """
 
-    def __init__(self):
+    def __init__(self, lcd_plate = None, navigation = None):
         """ Build out a LCD Plate & Navigation object to use with the interface
         """
-        self._lcd_plate = LcdPlate()
+        if None == lcd_plate:
+            self._lcd_plate = LcdPlate()
+        else:
+            self._lcd_plate = lcd_plate
 
-        self._navigation = Navigation()
+        if None == navigation:
+            self._navigation = Navigation()
+        else:
+            self._navigation = navigation
 
     def _readPressedButton(self):
         """ Checks all of the buttons to see if they are pressed & calls the correct function to deal with the button
@@ -95,9 +101,9 @@ class UserInterface(object):
         self._lcd_plate.setBackLightCyan()
 
         # Set the screen to the top of the menu
-        self._lcd_plate.message(self._navigation.currentItem())
+        self._lcd_plate.message(str(self._navigation.currentItem()))
 
-        self._last_refresh = time.time()
+        # self._last_refresh = time.time()
 
     def run(self):
         """ Continuous loop to keep polling to see if any of the buttons are pressed

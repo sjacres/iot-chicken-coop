@@ -6,6 +6,7 @@ build/
 dist/
 *.egg-info/
 *.egg
+*.eggs
 *.py[cod]
 __pycache__/
 *.so
@@ -14,3 +15,6 @@ __pycache__/
 # due to using tox and pytest
 .tox
 .cache
+
+# python py.test coverage
+.coverage
