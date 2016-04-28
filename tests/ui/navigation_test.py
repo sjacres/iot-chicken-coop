@@ -89,7 +89,7 @@ def test_moving_in_a_circle_for_top_or_bottom_node(navigation):
     assert False == navigation.at_top_of_branch()
     assert True == navigation.at_bottom_of_branch()
 
-def test_rest_restarts_the_navgation_at_the_top(navigation):
+def test_rest_restarts_the_navigation_at_the_top(navigation):
     navigation.move_right()
     navigation.move_down()
 
