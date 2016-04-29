@@ -57,6 +57,9 @@ class Navigation(object):
 
     def _at_end_of_branch(self):
         """ Check to see if on the last menu item of a branch line
+
+        :return:
+            bool: True if at the end, otherwise False
         """
         return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
 
@@ -75,6 +78,11 @@ class Navigation(object):
         return level == len(self._bread_crumb)
 
     def _at_start_of_branch(self):
+        """ Check to see if on the first menu item of a branch line
+
+        :return:
+            bool: True if at the start, otherwise False
+        """
         return self.at_level(1)
 
     def at_top_of_branch(self):
