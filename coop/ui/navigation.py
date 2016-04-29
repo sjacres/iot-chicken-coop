@@ -24,14 +24,6 @@ class Navigation(object):
 
         self.reset()
 
-    def _is_end_of_branch(self):
-        """ Check to see if on the last menu item of a branch line
-        """
-        return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
-
-    def _is_start_of_branch(self):
-        return self.at_level(1)
-
     def _load_navigation(self, navigation=None):
         """ Load the menu selection from json file
         """
@@ -63,6 +55,11 @@ class Navigation(object):
 
         return False
 
+    def _at_end_of_branch(self):
+        """ Check to see if on the last menu item of a branch line
+        """
+        return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
+
     def at_level(self, level=None):
         """ Get the level in the navigation that we are on or check if on passed in level
 
@@ -76,6 +73,9 @@ class Navigation(object):
             return len(self._bread_crumb)
 
         return level == len(self._bread_crumb)
+
+    def _at_start_of_branch(self):
+        return self.at_level(1)
 
     def at_top_of_branch(self):
         """ Check to see if ar the top of the items in the branch
@@ -147,13 +147,13 @@ class Navigation(object):
     def move_left(self):
         """ Move back up the navigation to the item that lead into the branch that we are on.
         """
-        if not self._is_start_of_branch():
+        if not self._at_start_of_branch():
             self._bread_crumb.pop(0)
             self._load_selected_branch()
 
     def move_right(self):
         """ Dive into the branch for the current item"""
-        if not self._is_end_of_branch():
+        if not self._at_end_of_branch():
             self._bread_crumb.insert(0, 0)
             self._load_selected_branch()
 
