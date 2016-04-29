@@ -24,20 +24,20 @@ def navigation(request):
 
 
 def test_knows_top_from_bottom(navigation):
-    assert True == navigation.at_top_of_branch()
-    assert False == navigation.at_bottom_of_branch()
+    assert navigation.at_top_of_branch()
+    assert not navigation.at_bottom_of_branch()
 
     navigation.move_down()
 
-    assert False == navigation.at_top_of_branch()
-    assert True == navigation.at_bottom_of_branch()
+    assert not navigation.at_top_of_branch()
+    assert navigation.at_bottom_of_branch()
 
 
 def test_top_is_bottom_for_single_node():
     navigation = Navigation({'Single': 'node'})
 
-    assert True == navigation.at_top_of_branch()
-    assert True == navigation.at_bottom_of_branch()
+    assert navigation.at_top_of_branch()
+    assert navigation.at_bottom_of_branch()
 
 
 def test_level_starts_at_1(navigation):
@@ -81,23 +81,23 @@ def test_level_is_constrained_by_depth_of_nodes(navigation):
 
 
 def test_moving_in_a_circle_for_top_or_bottom_node(navigation):
-    assert True == navigation.at_top_of_branch()
-    assert False == navigation.at_bottom_of_branch()
+    assert navigation.at_top_of_branch()
+    assert not navigation.at_bottom_of_branch()
 
     navigation.move_down()
 
-    assert False == navigation.at_top_of_branch()
-    assert True == navigation.at_bottom_of_branch()
+    assert not navigation.at_top_of_branch()
+    assert navigation.at_bottom_of_branch()
 
     navigation.move_down()
 
-    assert True == navigation.at_top_of_branch()
-    assert False == navigation.at_bottom_of_branch()
+    assert navigation.at_top_of_branch()
+    assert not navigation.at_bottom_of_branch()
 
     navigation.move_up()
 
-    assert False == navigation.at_top_of_branch()
-    assert True == navigation.at_bottom_of_branch()
+    assert not navigation.at_top_of_branch()
+    assert navigation.at_bottom_of_branch()
 
 
 def test_rest_restarts_the_navigation_at_the_top(navigation):

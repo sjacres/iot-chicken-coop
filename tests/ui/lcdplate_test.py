@@ -31,7 +31,7 @@ def lcdplate(mock_lcd):
 def test_knowing_if_a_button_has_been_previously_pressed(lcdplate):
     lcdplate._buttons['SELECT']['Pressed'] = True
 
-    assert True == lcdplate.been_pressed('SELECT')
+    assert lcdplate.been_pressed('SELECT')
 
 
 def test_returning_the_button_ids(lcdplate):
@@ -62,18 +62,18 @@ def test_going_to_sleep(lcdplate):
 def test_it_knows_if_a_button_is_currently_pressed_and_caches_it(lcdplate):
     lcdplate._lcd_plate.is_pressed.return_value = True
 
-    assert False == lcdplate._buttons['SELECT']['Pressed']
-    assert True == lcdplate.is_pressed('SELECT')
-    assert True == lcdplate._buttons['SELECT']['Pressed']
+    assert not lcdplate._buttons['SELECT']['Pressed']
+    assert lcdplate.is_pressed('SELECT')
+    assert lcdplate._buttons['SELECT']['Pressed']
 
 
 def test_it_know_if_a_button_is_not_pressed_and_clears_out_the_cache(lcdplate):
     lcdplate._lcd_plate.is_pressed.return_value = False
     lcdplate._buttons['SELECT']['Pressed'] = True
 
-    assert True == lcdplate._buttons['SELECT']['Pressed']
-    assert False == lcdplate.is_pressed('SELECT')
-    assert False == lcdplate._buttons['SELECT']['Pressed']
+    assert lcdplate._buttons['SELECT']['Pressed']
+    assert not lcdplate.is_pressed('SELECT')
+    assert not lcdplate._buttons['SELECT']['Pressed']
 
 
 def test_that_it_displays_a_message(lcdplate):
@@ -86,7 +86,7 @@ def test_it_ignores_a_button_that_is_just_held_down(lcdplate):
     lcdplate._lcd_plate.is_pressed.return_value = True
     lcdplate._buttons['SELECT']['Pressed'] = True
 
-    assert False == lcdplate.pressed_since_last_check('SELECT')
+    assert not lcdplate.pressed_since_last_check('SELECT')
 
 
 def test_sets_the_back_light_to_blue(lcdplate):

@@ -58,9 +58,9 @@ def test_it_knows_that_the_user_abandoned_the_interface(interface):
 
     # print "interface.time.time.time = ]" + str(interface.time.time()) + "["
 
-    # assert True == False
+    # assert False
 
-    assert True == interface.abandoned()
+    assert interface.abandoned()
 
 
 def test_when_the_down_button_is_pressed_navigation_is_informed(interface):
