@@ -3,33 +3,85 @@
     "Doors": {
       "Run Door": {
         "Open/Close": {
-          "Open": "openDoor",
-          "Close": "closeDoor"
+          "Open": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "open_run"
+          },
+          "Close": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "close_run"
+          }
         },
-        "Status": "doorStatus",
+        "Status": {
+          "namespace": "coop.automation",
+          "class": "Door",
+          "function": "status_run"
+        },
         "Enable/Disable": {
-          "Enable": "enableDoor",
-          "Disable": "disable"
+          "Enable": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "enable_run"
+          },
+          "Disable": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "disable_run"
+          }
         }
       },
       "Outside Door": {
         "Open/Close": {
-          "Open": "openDoor",
-          "Close": "closeDoor"
+          "Open": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "open_outside"
+          },
+          "Close": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "close_outside"
+          }
         },
-        "Status": "doorStatus",
+        "Status": {
+          "namespace": "coop.automation",
+          "class": "Door",
+          "function": "status_outside"
+        },
         "Enable/Disable": {
-          "Enable": "enableDoor",
-          "Disable": "disable"
+          "Enable": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "enable_outside"
+          },
+          "Disable": {
+            "namespace": "coop.automation",
+            "class": "Door",
+            "function": "disable_outside"
+          }
         }
       }
     },
     "Statuses": {
-      "Uptime": "uptime"
+      "Uptime": {
+        "namespace": "coop.system",
+        "class": "Status",
+        "function": "uptime"
+      }
     },
     "System": {
-      "Power Off": "powerOff",
-      "Reboot": "reboot"
+      "Shutdown": {
+        "namespace": "coop.system",
+        "class": "Power",
+        "function": "shutdown"
+      },
+      "Reboot": {
+        "namespace": "coop.system",
+        "class": "Power",
+        "function": "reboot"
+      }
     }
   }
 }
