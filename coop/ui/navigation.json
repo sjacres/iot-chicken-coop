@@ -4,81 +4,111 @@
       "Run Door": {
         "Open/Close": {
           "Open": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "open_run"
+            "function": "open",
+            "params": [
+              "run"
+            ]
           },
           "Close": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "close_run"
+            "function": "close",
+            "params": [
+              "run"
+            ]
           }
         },
         "Status": {
-          "namespace": "coop.automation",
+          "namespace": "coop.automation.door",
           "class": "Door",
-          "function": "status_run"
+          "function": "status",
+          "params": [
+            "run"
+          ]
         },
         "Enable/Disable": {
           "Enable": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "enable_run"
+            "function": "enable",
+            "params": [
+              "run"
+            ]
           },
           "Disable": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "disable_run"
+            "function": "disable",
+            "params": [
+              "run"
+            ]
           }
         }
       },
       "Outside Door": {
         "Open/Close": {
           "Open": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "open_outside"
+            "function": "open",
+            "params": [
+              "outside"
+            ]
           },
           "Close": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "close_outside"
+            "function": "close",
+            "params": [
+              "outside"
+            ]
           }
         },
         "Status": {
-          "namespace": "coop.automation",
+          "namespace": "coop.automation.door",
           "class": "Door",
-          "function": "status_outside"
+          "function": "status",
+          "params": [
+            "outside"
+          ]
         },
         "Enable/Disable": {
           "Enable": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "enable_outside"
+            "function": "enable",
+            "params": [
+              "outside"
+            ]
           },
           "Disable": {
-            "namespace": "coop.automation",
+            "namespace": "coop.automation.door",
             "class": "Door",
-            "function": "disable_outside"
+            "function": "disable",
+            "params": [
+              "outside"
+            ]
           }
         }
       }
     },
     "Statuses": {
       "Uptime": {
-        "namespace": "coop.system",
+        "namespace": "coop.system.status",
         "class": "Status",
         "function": "uptime"
       }
     },
     "System": {
       "Shutdown": {
-        "namespace": "coop.system",
+        "namespace": "coop.system.power",
         "class": "Power",
         "function": "shutdown"
       },
       "Reboot": {
-        "namespace": "coop.system",
+        "namespace": "coop.system.power",
         "class": "Power",
         "function": "reboot"
       }
