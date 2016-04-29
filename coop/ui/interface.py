@@ -1,5 +1,6 @@
 from lcdplate import LcdPlate
 from navigation import Navigation
+import importlib
 import time
 
 
@@ -90,9 +91,21 @@ class UserInterface(object):
         """ The select button is pressed, so process the command for the item
         """
 
-        # TODO: Actually run the process that the navigation items expects
-        self._lcd_plate.clear()
-        self._lcd_plate.message("In Select")
+        function_to_call = self._navigation.current_item_function()
+
+        if function_to_call is not None:
+            module = importlib.import_module(function_to_call['namespace'])
+            instance = getattr(module, function_to_call['class'])(self._lcd_plate)
+
+            try:
+                getattr(instance, function_to_call['function'])(*function_to_call['params'])
+            except KeyError:
+                getattr(instance, function_to_call['function'])()
+
+            # Let anything stay on the display for 5 seconds
+            time.sleep(5)
+
+            self.refresh()
 
     def pressed_up(self):
         """ The up button is pressed, so tell navigation to move up one
