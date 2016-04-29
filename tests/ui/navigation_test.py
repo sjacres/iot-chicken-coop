@@ -41,43 +41,43 @@ def test_top_is_bottom_for_single_node():
 
 
 def test_level_starts_at_1(navigation):
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
     navigation.move_right()
 
-    assert 2 == navigation.at_level()
+    assert navigation.at_level(2)
 
 
 def test_moving_up_or_down_does_not_change_level(navigation):
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
     navigation.move_down()
 
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
     navigation.move_up()
 
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
 
 def test_level_is_constrained_by_depth_of_nodes(navigation):
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
     navigation.move_left()
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
     navigation.move_right()
-    assert 2 == navigation.at_level()
+    assert navigation.at_level(2)
 
     navigation.move_right()
 
-    assert 2 == navigation.at_level()
+    assert navigation.at_level(2)
 
     navigation.move_left()
     navigation.move_down()
     navigation.move_right()
 
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
 
 def test_moving_in_a_circle_for_top_or_bottom_node(navigation):
@@ -105,12 +105,12 @@ def test_rest_restarts_the_navigation_at_the_top(navigation):
     navigation.move_down()
 
     assert 1 == navigation.current_item_index()
-    assert 2 == navigation.at_level()
+    assert navigation.at_level(2)
 
     navigation.reset()
 
     assert 0 == navigation.current_item_index()
-    assert 1 == navigation.at_level()
+    assert navigation.at_level(1)
 
 
 def test_that_the_expected_item_is_returned(navigation):

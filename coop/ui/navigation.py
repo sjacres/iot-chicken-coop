@@ -30,7 +30,7 @@ class Navigation(object):
         return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
 
     def _is_start_of_branch(self):
-        return 1 == self.at_level()
+        return self.at_level(1)
 
     def _load_navigation(self, navigation=None):
         """ Load the menu selection from json file
@@ -63,13 +63,19 @@ class Navigation(object):
 
         return False
 
-    def at_level(self):
-        """ Get the level in the navigation that we are on.
+    def at_level(self, level=None):
+        """ Get the level in the navigation that we are on or check if on passed in level
+
+        :param:
+            int: The level to chek to see if we are on
 
         :return:
             int: Level (This is NOT zero based, so 1 is the first level.)
         """
-        return len(self._bread_crumb)
+        if level is None:
+            return len(self._bread_crumb)
+
+        return level == len(self._bread_crumb)
 
     def at_top_of_branch(self):
         """ Check to see if ar the top of the items in the branch
