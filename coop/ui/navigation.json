@@ -54,7 +54,7 @@
             "class": "Door",
             "function": "open",
             "params": [
-              "outside"
+              "exterior"
             ]
           },
           "Close": {
@@ -62,7 +62,7 @@
             "class": "Door",
             "function": "close",
             "params": [
-              "outside"
+              "exterior"
             ]
           }
         },
@@ -71,7 +71,7 @@
           "class": "Door",
           "function": "status",
           "params": [
-            "outside"
+            "exterior"
           ]
         },
         "Enable/Disable": {
@@ -80,7 +80,7 @@
             "class": "Door",
             "function": "enable",
             "params": [
-              "outside"
+              "exterior"
             ]
           },
           "Disable": {
@@ -88,7 +88,7 @@
             "class": "Door",
             "function": "disable",
             "params": [
-              "outside"
+              "exterior"
             ]
           }
         }
