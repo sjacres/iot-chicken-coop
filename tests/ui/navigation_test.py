@@ -141,7 +141,23 @@ def test_expected_default_title():
 
     assert "IOT Chicken Coop\nRight to start->" == navigation.current_item()
 
-# def test_that_the_expected_function_is_returned(navigation):
-#     navigation.move_right()
-#
-#     assert {'child.class': 'func_a'} == navigation.current_function()
+
+def test_that_the_expected_function_is_returned_for_current_item(navigation):
+    assert navigation.current_item_function() is None
+
+    navigation.move_right()
+
+    current_function = navigation.current_item_function()
+
+    assert 'some.namespace' == current_function['namespace']
+    assert 'Class' == current_function['class']
+    assert 'function_to_run' == current_function['function']
+
+    navigation.reset()
+    navigation.move_down()
+
+    current_function = navigation.current_item_function()
+
+    assert 'some.namespace' == current_function['namespace']
+    assert 'Class' == current_function['class']
+    assert 'function_to_run' == current_function['function']
