@@ -15,7 +15,7 @@ class Navigation(object):
         """
 
         if tree is None:
-            self._load_navigation()
+            self._load()
         else:
             self._tree = tree
 
@@ -24,15 +24,7 @@ class Navigation(object):
 
         self.reset()
 
-    def _load_navigation(self, navigation=None):
-        """ Load the menu selection from json file
-        """
-        if navigation is None:
-            navigation = os.path.dirname(__file__) + '/navigation.json'
-
-        self._tree = json.load(open(navigation), object_pairs_hook=collections.OrderedDict)
-
-    def _load_selected_branch(self):
+    def _get_selected_branch(self):
         """ Make the list of the items in the current branch
 
         Walk down the bread crumbs to get to the items in the navigation that belong to the previous selection
@@ -43,6 +35,14 @@ class Navigation(object):
         # Loop through the menu _bread_crumbs backwards getting each of the values that were selected
         for selected in self._bread_crumb[:0:-1]:
             self._branch = self._branch.values()[selected]
+
+    def _load(self, navigation=None):
+        """ Load the menu selection from json file
+        """
+        if navigation is None:
+            navigation = os.path.dirname(__file__) + '/navigation.json'
+
+        self._tree = json.load(open(navigation), object_pairs_hook=collections.OrderedDict)
 
     def at_bottom_of_branch(self):
         """ Check to see if ar the bottom of the items in the branch
@@ -55,7 +55,7 @@ class Navigation(object):
 
         return False
 
-    def _at_end_of_branch(self):
+    def at_end_of_branch(self):
         """ Check to see if on the last menu item of a branch line
 
         :return:
@@ -77,7 +77,7 @@ class Navigation(object):
 
         return level == len(self._bread_crumb)
 
-    def _at_start_of_branch(self):
+    def at_start_of_branch(self):
         """ Check to see if on the first menu item of a branch line
 
         :return:
@@ -96,14 +96,6 @@ class Navigation(object):
 
         return False
 
-    def current_branch(self):
-        """ Getter for the list of the current items
-
-        :return:
-            list: Items in the selected branch
-        """
-        return self._branch.keys()
-
     def current_item(self):
         """ Getter for the current items
 
@@ -111,7 +103,7 @@ class Navigation(object):
             string: Current item from the branch
         """
         try:
-            return self.current_branch()[self.current_item_index()]
+            return self.menu()[self.current_item_index()]
         except IndexError:
             return ""
 
@@ -129,10 +121,18 @@ class Navigation(object):
         :return:
             string: Current function from the branch
         """
-        if self._at_end_of_branch():
+        if self.at_end_of_branch():
             return self._branch.values()[self.current_item_index()]
 
         return None
+
+    def menu(self):
+        """ Getter for the list of the current items
+
+        :return:
+            list: Items in the selected branch
+        """
+        return self._branch.keys()
 
     def move_down(self):
         """ Move down in the items in the current branch.
@@ -147,15 +147,15 @@ class Navigation(object):
     def move_left(self):
         """ Move back up the navigation to the item that lead into the branch that we are on.
         """
-        if not self._at_start_of_branch():
+        if not self.at_start_of_branch():
             self._bread_crumb.pop(0)
-            self._load_selected_branch()
+            self._get_selected_branch()
 
     def move_right(self):
         """ Dive into the branch for the current item"""
-        if not self._at_end_of_branch():
+        if not self.at_end_of_branch():
             self._bread_crumb.insert(0, 0)
-            self._load_selected_branch()
+            self._get_selected_branch()
 
     def move_up(self):
         """ Move up in the items in the current branch.
@@ -165,11 +165,11 @@ class Navigation(object):
         if not self.at_top_of_branch():
             self._bread_crumb[0] -= 1
         else:
-            self._bread_crumb[0] = len(self.current_branch()) - 1
+            self._bread_crumb[0] = len(self.menu()) - 1
 
     def reset(self):
         """ Reset the location in the navigation to the first item
         """
         self._bread_crumb = [0]
 
-        self._load_selected_branch()
+        self._get_selected_branch()

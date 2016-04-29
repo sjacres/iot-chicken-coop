@@ -123,11 +123,11 @@ def test_that_the_expected_item_is_returned(navigation):
 
 
 def test_all_the_items_in_the_branch_can_be_returned_as_a_list_in_expected_order(navigation):
-    assert ['First', 'Second'] == navigation.current_branch()
+    assert ['First', 'Second'] == navigation.menu()
 
     navigation.move_right()
 
-    assert ['Sub First', 'Sub Second', 'Sub Third'] == navigation.current_branch()
+    assert ['Sub First', 'Sub Second', 'Sub Third'] == navigation.menu()
 
 
 def test_it_returns_empty_string_when_no_navigation_items():
