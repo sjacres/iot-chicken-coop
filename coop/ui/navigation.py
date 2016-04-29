@@ -9,6 +9,7 @@ class Navigation(object):
     The items are stored in a json file so that there can be an unlimited number of branches, where a branch is the
     child selections of an item.
     """
+
     def __init__(self, tree=None):
         """ Load the navigation from the json file & pick the first branch
         """
@@ -22,6 +23,14 @@ class Navigation(object):
         self._bread_crumb = None
 
         self.reset()
+
+    def _is_end_of_branch(self):
+        """ Check to see if on the last menu item of a branch line
+        """
+        return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
+
+    def _is_start_of_branch(self):
+        return 1 == self.at_level()
 
     def _load_navigation(self, navigation=None):
         """ Load the menu selection from json file
@@ -42,14 +51,6 @@ class Navigation(object):
         # Loop through the menu _bread_crumbs backwards getting each of the values that were selected
         for selected in self._bread_crumb[:0:-1]:
             self._branch = self._branch.values()[selected]
-
-        # Maybe at the end of the line, so there will ont be any children
-        try:
-            # Get the keys for the level that we ended at
-            self._branch = self._branch.keys()
-        # Was not, so back up one
-        except AttributeError:
-            self.move_left()
 
     def at_bottom_of_branch(self):
         """ Check to see if ar the bottom of the items in the branch
@@ -87,7 +88,26 @@ class Navigation(object):
         :return:
             list: Items in the selected branch
         """
-        return self._branch
+        return self._branch.keys()
+
+    # def current_branch_functions(self):
+    #     """ Getter for the list of the current functions
+    #
+    #     :return:
+    #         list: Functions in the selected branch
+    #     """
+    #     return self._branch_functions
+    #
+    # def current_function(self):
+    #     """ Getter for the current function
+    #
+    #     :return:
+    #         string: Current function from the branch
+    #     """
+    #     try:
+    #         return self._branch_functions[self.current_item_index()]
+    #     except IndexError:
+    #         return ""
 
     def current_item(self):
         """ Getter for the current items
@@ -96,7 +116,7 @@ class Navigation(object):
             string: Current item from the branch
         """
         try:
-            return self._branch[self.current_item_index()]
+            return self.current_branch()[self.current_item_index()]
         except IndexError:
             return ""
 
@@ -121,14 +141,15 @@ class Navigation(object):
     def move_left(self):
         """ Move back up the navigation to the item that lead into the branch that we are on.
         """
-        if 1 < len(self._bread_crumb):
+        if not self._is_start_of_branch():
             self._bread_crumb.pop(0)
             self._load_selected_branch()
 
     def move_right(self):
         """ Dive into the branch for the current item"""
-        self._bread_crumb.insert(0, 0)
-        self._load_selected_branch()
+        if not self._is_end_of_branch():
+            self._bread_crumb.insert(0, 0)
+            self._load_selected_branch()
 
     def move_up(self):
         """ Move up in the items in the current branch.
@@ -138,7 +159,7 @@ class Navigation(object):
         if not self.at_top_of_branch():
             self._bread_crumb[0] -= 1
         else:
-            self._bread_crumb[0] = len(self._branch) - 1
+            self._bread_crumb[0] = len(self.current_branch()) - 1
 
     def reset(self):
         """ Reset the location in the navigation to the first item
