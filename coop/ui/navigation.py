@@ -61,7 +61,7 @@ class Navigation(object):
         :return:
             bool: True if at the end, otherwise False
         """
-        return isinstance(self._branch.values()[self.current_item_index()].values()[0], str)
+        return not isinstance(self._branch.values()[self.current_item_index()].values()[0], collections.OrderedDict)
 
     def at_level(self, level=None):
         """ Get the level in the navigation that we are on or check if on passed in level
@@ -104,25 +104,6 @@ class Navigation(object):
         """
         return self._branch.keys()
 
-    # def current_branch_functions(self):
-    #     """ Getter for the list of the current functions
-    #
-    #     :return:
-    #         list: Functions in the selected branch
-    #     """
-    #     return self._branch_functions
-    #
-    # def current_function(self):
-    #     """ Getter for the current function
-    #
-    #     :return:
-    #         string: Current function from the branch
-    #     """
-    #     try:
-    #         return self._branch_functions[self.current_item_index()]
-    #     except IndexError:
-    #         return ""
-
     def current_item(self):
         """ Getter for the current items
 
@@ -141,6 +122,17 @@ class Navigation(object):
             int: The index of the current item (This IS zero based)
         """
         return self._bread_crumb[0]
+
+    def current_item_function(self):
+        """ Getter for the current function
+
+        :return:
+            string: Current function from the branch
+        """
+        if self._at_end_of_branch():
+            return self._branch.values()[self.current_item_index()]
+
+        return None
 
     def move_down(self):
         """ Move down in the items in the current branch.
