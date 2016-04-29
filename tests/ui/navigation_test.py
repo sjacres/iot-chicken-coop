@@ -23,6 +23,10 @@ def navigation(request):
     return Navigation(tree)
 
 
+def test_it_can_be_constructed(navigation):
+    assert isinstance(navigation, Navigation)
+
+
 def test_knows_top_from_bottom(navigation):
     assert navigation.at_top_of_branch()
     assert not navigation.at_bottom_of_branch()

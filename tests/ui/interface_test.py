@@ -39,6 +39,16 @@ def interface(mock_lcd_plate, mock_navigation):
     return UserInterface(mock_lcd_plate, mock_navigation)
 
 
+@pytest.mark.skip(reason="Figure out why this assertion fails")
+# assert isinstance(<coop.ui.interface.UserInterface object at 0x107438a10>, <class 'coop.ui.interface.UserInterface'>)
+@patch.dict('sys.modules', Adafruit_CharLCD=MockAdafruit_CharLCD)
+def test_it_can_be_constructed(interface):
+    # Do import at this place, so that the patch will catch the mocked class
+    from coop.ui.interface import UserInterface
+
+    assert isinstance(interface, UserInterface)
+
+
 # mock_time = Mock(spec=time)
 # mock_time.time.return_value = 600
 
@@ -80,6 +90,7 @@ def test_when_the_right_button_is_pressed_navigation_is_informed(interface):
 
     interface._navigation.move_right.assert_called_once_with()
 
+
 @pytest.mark.skip(reason="Have not really wired up this call, so skipping for now")
 def test_when_the_select_button_is_pressed_navigation_is_informed(interface):
     interface.pressed_select()
@@ -91,6 +102,7 @@ def test_when_the_up_button_is_pressed_navigation_is_informed(interface):
     interface.pressed_up()
 
     interface._navigation.move_up.assert_called_once_with()
+
 
 @pytest.mark.skip(reason="Cannot figure out how to mock time to make the 5 min spread")
 # TODO: This needs to be fixed in "test_it_knows_that_the_user_abandoned_the_interface" above
@@ -107,6 +119,7 @@ def test_that_refresh_puts_the_display_in_correct_state(interface):
     interface._navigation.currentitem.return_value = current_item
 
     interface._lcd_plate.message.assert_called_once_with(current_item)
+
 
 @pytest.mark.skip(reason="Cannot figure out how to mock time to make the 5 min spread")
 # TODO: This needs to be fixed in "test_it_knows_that_the_user_abandoned_the_interface" above
