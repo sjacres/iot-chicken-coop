@@ -52,6 +52,12 @@ def test_level_starts_at_1(navigation):
     assert navigation.at_level(2)
 
 
+def test_returns_level_if_no_param_passed(navigation):
+    navigation.move_right()
+
+    assert 2 == navigation.at_level()
+
+
 def test_moving_up_or_down_does_not_change_level(navigation):
     assert navigation.at_level(1)
 
