@@ -53,41 +53,49 @@ def test_that_close_runs_the_correct_motor_in_the_correct_direction_while_displa
     door.close('exterior')
 
     door._lcd_plate.clear.assert_any_call()
-    door._lcd_plate.message.assert_called_with('Closing exterior\ndoor...')
+    door._lcd_plate.message.assert_any_call('Closing exterior\ndoor...')
 
     # door._exterior_door.run.assert_any_call('Backward')
     # door._exterior_door.setSpeed.assert_called_once_with(150)
     # # TODO: Verify length of time
     # door._exterior_door.run.assert_called_with('Release')
 
+    door._lcd_plate.message.assert_called_with('Closed exterior\ndoor')
+
     door.close('run')
 
     door._lcd_plate.clear.assert_any_call()
-    door._lcd_plate.message.assert_called_with('Closing run\ndoor...')
+    door._lcd_plate.message.assert_any_call('Closing run\ndoor...')
 
     # door._run_door.run.assert_any_call('Backward')
     # door._run_door.setSpeed.assert_called_once_with(150)
     # # TODO: Verify length of time
     # door._run_door.run.assert_called_with('Release')
 
+    door._lcd_plate.message.assert_called_with('Closed run\ndoor')
+
 
 def test_that_opens_runs_the_correct_motor_in_the_correct_direction_while_displaying_expected_message(door):
     door.open('exterior')
 
     door._lcd_plate.clear.assert_any_call()
-    door._lcd_plate.message.assert_called_with('Opening exterior\ndoor...')
+    door._lcd_plate.message.assert_any_call('Opening exterior\ndoor...')
 
     # door._exterior_door.run.assert_any_call('Forward')
     # door._exterior_door.setSpeed.assert_called_once_with(150)
     # # TODO: Verify length of time
     # door._exterior_door.run.assert_called_with('Release')
 
+    door._lcd_plate.message.assert_called_with('Opened exterior\ndoor')
+
     door.open('run')
 
     door._lcd_plate.clear.assert_any_call()
-    door._lcd_plate.message.assert_called_with('Opening run\ndoor...')
+    door._lcd_plate.message.assert_any_call('Opening run\ndoor...')
 
     # door._run_door.run.assert_any_call('Forward')
     # door._run_door.setSpeed.assert_called_once_with(150)
     # # TODO: Verify length of time
     # door._run_door.run.assert_called_with('Release')
+
+    door._lcd_plate.message.assert_called_with('Opened run\ndoor')

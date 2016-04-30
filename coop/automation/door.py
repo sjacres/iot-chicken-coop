@@ -33,36 +33,42 @@ class Door(object):
         for motor_id in range(1, 5):
             self._motor_plate.getMotor(motor_id).run(Adafruit_MotorHAT.RELEASE)
 
-    def close(self, door):
+    def close(self, door_name):
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Closing ' + door + "\ndoor...")
+        self._lcd_plate.message('Closing ' + door_name + "\ndoor...")
 
-        door = getattr(self, '_' + door + '_door')
+        door = getattr(self, '_' + door_name + '_door')
 
         door.run(Adafruit_MotorHAT.BACKWARD)
         door.setSpeed(self.MOTOR_SPEED)
         time.sleep(self.CLOSE_TIME)
         door.run(Adafruit_MotorHAT.RELEASE)
 
-    def disable(self, door):
+        self._lcd_plate.clear()
+        self._lcd_plate.message('Closed ' + door_name + "\ndoor")
+
+    def disable(self, door_name):
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Disable Selected\n' + door + " door")
+        self._lcd_plate.message('Disable Selected\n' + door_name + " door")
 
-    def enable(self, door):
+    def enable(self, door_name):
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Enable Selected\n' + door + " door")
+        self._lcd_plate.message('Enable Selected\n' + door_name + " door")
 
-    def open(self, door):
+    def open(self, door_name):
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Opening ' + door + "\ndoor...")
+        self._lcd_plate.message('Opening ' + door_name + "\ndoor...")
 
-        door = getattr(self, '_' + door + '_door')
+        door = getattr(self, '_' + door_name + '_door')
 
         door.run(Adafruit_MotorHAT.FORWARD)
         door.setSpeed(self.MOTOR_SPEED)
         time.sleep(self.OPEN_TIME)
         door.run(Adafruit_MotorHAT.RELEASE)
+
+        self._lcd_plate.clear()
+        self._lcd_plate.message('Opened ' + door_name + "\ndoor")
