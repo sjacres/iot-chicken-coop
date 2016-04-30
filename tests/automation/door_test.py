@@ -3,6 +3,10 @@ import pytest
 
 # Setup the mock object
 MockAdafruit_MotorHAT = Mock()
+# Set the values for the constants on the mock object
+MockAdafruit_MotorHAT.BACKWARD = 'Backward'
+MockAdafruit_MotorHAT.FORWARD = 'Forward'
+MockAdafruit_MotorHAT.RELEASE = 'Release'
 
 
 @pytest.fixture()
@@ -34,7 +38,56 @@ def test_it_can_be_constructed(door):
     assert isinstance(door, Door)
 
 
-@pytest.mark.skip(reason="This is just a stub")
-def test_something(door):
-    # TODO: Write test here
-    pass
+def test_clean_up_stops_all_of_the_motors(door):
+    door.clean_up()
+
+    door._motor_plate.getMotor.assert_any_call(1)
+    door._motor_plate.getMotor.assert_any_call(2)
+    door._motor_plate.getMotor.assert_any_call(3)
+    door._motor_plate.getMotor.assert_any_call(4)
+
+    # TODO: Test that "Release was called"
+
+
+def test_that_close_runs_the_correct_motor_in_the_correct_direction_while_displaying_expected_message(door):
+    door.close('exterior')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Closing exterior\ndoor...')
+
+    # door._exterior_door.run.assert_any_call('Backward')
+    # door._exterior_door.setSpeed.assert_called_once_with(150)
+    # # TODO: Verify length of time
+    # door._exterior_door.run.assert_called_with('Release')
+
+    door.close('run')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Closing run\ndoor...')
+
+    # door._run_door.run.assert_any_call('Backward')
+    # door._run_door.setSpeed.assert_called_once_with(150)
+    # # TODO: Verify length of time
+    # door._run_door.run.assert_called_with('Release')
+
+
+def test_that_opens_runs_the_correct_motor_in_the_correct_direction_while_displaying_expected_message(door):
+    door.open('exterior')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Opening exterior\ndoor...')
+
+    # door._exterior_door.run.assert_any_call('Forward')
+    # door._exterior_door.setSpeed.assert_called_once_with(150)
+    # # TODO: Verify length of time
+    # door._exterior_door.run.assert_called_with('Release')
+
+    door.open('run')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Opening run\ndoor...')
+
+    # door._run_door.run.assert_any_call('Forward')
+    # door._run_door.setSpeed.assert_called_once_with(150)
+    # # TODO: Verify length of time
+    # door._run_door.run.assert_called_with('Release')

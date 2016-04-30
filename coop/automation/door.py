@@ -22,7 +22,7 @@ class Door(object):
 
         self._run_door = self._motor_plate.getMotor(self.RUN_MOTOR_ID)
 
-        self._external_door = self._motor_plate.getMotor(self.EXTERIOR_MOTOR_ID)
+        self._exterior_door = self._motor_plate.getMotor(self.EXTERIOR_MOTOR_ID)
 
         # Make sure to clean up when exiting
         atexit.register(self.clean_up)
@@ -30,39 +30,39 @@ class Door(object):
     def clean_up(self):
         """ Once the script exits, then make sure the motors are off
             """
-        for motor_id in range(1, 4):
+        for motor_id in range(1, 5):
             self._motor_plate.getMotor(motor_id).run(Adafruit_MotorHAT.RELEASE)
 
     def close(self, door):
-        print door
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Close Selected for\n ' + door + " door")
+        self._lcd_plate.message('Closing ' + door + "\ndoor...")
 
-        # .run(Adafruit_MotorHAT.BACKWARD)
-        # .setSpeed(self.MOTOR_SPEED)
+        door = getattr(self, '_' + door + '_door')
+
+        door.run(Adafruit_MotorHAT.BACKWARD)
+        door.setSpeed(self.MOTOR_SPEED)
         time.sleep(self.CLOSE_TIME)
-        # .run(Adafruit_MotorHAT.RELEASE)
+        door.run(Adafruit_MotorHAT.RELEASE)
 
     def disable(self, door):
-        print door
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Disable Selected for\n ' + door + " door")
+        self._lcd_plate.message('Disable Selected\n' + door + " door")
 
     def enable(self, door):
-        print door
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Enable Selected for\n ' + door + " door")
+        self._lcd_plate.message('Enable Selected\n' + door + " door")
 
     def open(self, door):
-        print door
         self._lcd_plate.clear()
 
-        self._lcd_plate.message('Open Selected for\n ' + door + " door")
+        self._lcd_plate.message('Opening ' + door + "\ndoor...")
 
-        # .run(Adafruit_MotorHAT.FORWARD)
-        # .setSpeed(self.MOTOR_SPEED)
+        door = getattr(self, '_' + door + '_door')
+
+        door.run(Adafruit_MotorHAT.FORWARD)
+        door.setSpeed(self.MOTOR_SPEED)
         time.sleep(self.OPEN_TIME)
-        # .run(Adafruit_MotorHAT.RELEASE)
+        door.run(Adafruit_MotorHAT.RELEASE)
