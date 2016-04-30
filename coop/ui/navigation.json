@@ -4,7 +4,7 @@
       "Run Door": {
         "Open/Close": {
           "Open": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "open",
             "params": [
@@ -12,7 +12,7 @@
             ]
           },
           "Close": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "close",
             "params": [
@@ -21,7 +21,7 @@
           }
         },
         "Status": {
-          "namespace": "coop.automation.door",
+          "namespace": "automation.door",
           "class": "Door",
           "function": "status",
           "params": [
@@ -30,7 +30,7 @@
         },
         "Enable/Disable": {
           "Enable": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "enable",
             "params": [
@@ -38,7 +38,7 @@
             ]
           },
           "Disable": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "disable",
             "params": [
@@ -50,7 +50,7 @@
       "Outside Door": {
         "Open/Close": {
           "Open": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "open",
             "params": [
@@ -58,7 +58,7 @@
             ]
           },
           "Close": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "close",
             "params": [
@@ -67,7 +67,7 @@
           }
         },
         "Status": {
-          "namespace": "coop.automation.door",
+          "namespace": "automation.door",
           "class": "Door",
           "function": "status",
           "params": [
@@ -76,7 +76,7 @@
         },
         "Enable/Disable": {
           "Enable": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "enable",
             "params": [
@@ -84,7 +84,7 @@
             ]
           },
           "Disable": {
-            "namespace": "coop.automation.door",
+            "namespace": "automation.door",
             "class": "Door",
             "function": "disable",
             "params": [
@@ -96,19 +96,19 @@
     },
     "Statuses": {
       "Uptime": {
-        "namespace": "coop.system.status",
+        "namespace": "system.status",
         "class": "Status",
         "function": "uptime"
       }
     },
     "System": {
       "Shutdown": {
-        "namespace": "coop.system.power",
+        "namespace": "system.power",
         "class": "Power",
         "function": "shutdown"
       },
       "Reboot": {
-        "namespace": "coop.system.power",
+        "namespace": "system.power",
         "class": "Power",
         "function": "reboot"
       }
