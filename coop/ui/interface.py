@@ -105,7 +105,8 @@ class UserInterface(object):
             # Let anything stay on the display for 5 seconds
             time.sleep(5)
 
-            self.refresh()
+            # Back up one step after running method
+            self.pressed_left()
 
     def pressed_up(self):
         """ The up button is pressed, so tell navigation to move up one
