@@ -72,6 +72,7 @@ def test_that_close_runs_the_correct_motor_in_the_correct_direction_while_displa
     # # TODO: Verify length of time
     # door._run_door.run.assert_called_with('Release')
 
+    door._lcd_plate.clear.assert_any_call()
     door._lcd_plate.message.assert_called_with('Closed run\ndoor')
 
 
@@ -86,6 +87,7 @@ def test_that_opens_runs_the_correct_motor_in_the_correct_direction_while_displa
     # # TODO: Verify length of time
     # door._exterior_door.run.assert_called_with('Release')
 
+    door._lcd_plate.clear.assert_any_call()
     door._lcd_plate.message.assert_called_with('Opened exterior\ndoor')
 
     door.open('run')
@@ -99,3 +101,47 @@ def test_that_opens_runs_the_correct_motor_in_the_correct_direction_while_displa
     # door._run_door.run.assert_called_with('Release')
 
     door._lcd_plate.message.assert_called_with('Opened run\ndoor')
+
+
+def test_that_disable_marks_the_correct_door_as_disabled_while_displaying_expected_message(door):
+    door.disable('exterior')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Disabling exterior\ndoor...')
+
+    # TODO: Test the disable once we code it out
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Disabled exterior\ndoor')
+
+    door.disable('run')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Disabling run\ndoor...')
+
+    # TODO: Test the disable once we code it out
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Disabled run\ndoor')
+
+
+def test_that_enable_marks_the_correct_door_as_enabled_while_displaying_expected_message(door):
+    door.enable('exterior')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Enabling exterior\ndoor...')
+
+    # TODO: Test the disable once we code it out
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Enabled exterior\ndoor')
+
+    door.enable('run')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Enabling run\ndoor...')
+
+    # TODO: Test the disable once we code it out
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_called_with('Enabled run\ndoor')

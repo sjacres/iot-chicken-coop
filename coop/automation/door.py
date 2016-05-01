@@ -35,8 +35,7 @@ class Door(object):
 
     def close(self, door_name):
         self._lcd_plate.clear()
-
-        self._lcd_plate.message('Closing ' + door_name + "\ndoor...")
+        self._lcd_plate.message('Closing ' + door_name + '\ndoor...')
 
         door = getattr(self, '_' + door_name + '_door')
 
@@ -46,22 +45,29 @@ class Door(object):
         door.run(Adafruit_MotorHAT.RELEASE)
 
         self._lcd_plate.clear()
-        self._lcd_plate.message('Closed ' + door_name + "\ndoor")
+        self._lcd_plate.message('Closed ' + door_name + '\ndoor')
 
     def disable(self, door_name):
         self._lcd_plate.clear()
+        self._lcd_plate.message('Disabling ' + door_name + '\ndoor...')
 
-        self._lcd_plate.message('Disable Selected\n' + door_name + " door")
+        # TODO: Add code here to disable the automatic doors
+
+        self._lcd_plate.clear()
+        self._lcd_plate.message('Disabled ' + door_name + '\ndoor')
 
     def enable(self, door_name):
         self._lcd_plate.clear()
+        self._lcd_plate.message('Enabling ' + door_name + '\ndoor...')
 
-        self._lcd_plate.message('Enable Selected\n' + door_name + " door")
+        # TODO: Add code here to enable the automatic doors
+
+        self._lcd_plate.clear()
+        self._lcd_plate.message('Enabled ' + door_name + '\ndoor')
 
     def open(self, door_name):
         self._lcd_plate.clear()
-
-        self._lcd_plate.message('Opening ' + door_name + "\ndoor...")
+        self._lcd_plate.message('Opening ' + door_name + '\ndoor...')
 
         door = getattr(self, '_' + door_name + '_door')
 
@@ -71,4 +77,4 @@ class Door(object):
         door.run(Adafruit_MotorHAT.RELEASE)
 
         self._lcd_plate.clear()
-        self._lcd_plate.message('Opened ' + door_name + "\ndoor")
+        self._lcd_plate.message('Opened ' + door_name + '\ndoor')
