@@ -8,6 +8,9 @@ MockAdafruit_MotorHAT.BACKWARD = 'Backward'
 MockAdafruit_MotorHAT.FORWARD = 'Forward'
 MockAdafruit_MotorHAT.RELEASE = 'Release'
 
+# TODO: Fix the error on the atexit issue where the AdaFruit_MotorHAT is NoneType, so showing error
+# AttributeError: 'NoneType' object has no attribute 'RELEASE'
+
 
 @pytest.fixture()
 def mock_lcd_plate():
@@ -101,6 +104,21 @@ def test_that_opens_runs_the_correct_motor_in_the_correct_direction_while_displa
     # door._run_door.run.assert_called_with('Release')
 
     door._lcd_plate.message.assert_called_with('Opened run\ndoor')
+
+def test_that_an_error_is_displayed_on_the_screen_for_an_invalid_door_name(door):
+    door.close('fake')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Closing fake\ndoor...')
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Could not locate\nfake door')
+
+    door.open('fake')
+
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Opening fake\ndoor...')
+    door._lcd_plate.clear.assert_any_call()
+    door._lcd_plate.message.assert_any_call('Could not locate\nfake door')
 
 
 def test_that_disable_marks_the_correct_door_as_disabled_while_displaying_expected_message(door):
