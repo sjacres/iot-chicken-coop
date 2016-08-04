@@ -1,5 +1,5 @@
-#before_script:
-  #TODO: Deal with the requirments.txt here
+before_script:
+  - pip install -r requirements.txt
 
 # We test jessie (the default)
 test:pi:
