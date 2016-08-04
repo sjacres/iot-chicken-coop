@@ -1,0 +1,10 @@
+#before_script:
+  #TODO: Deal with the requirments.txt here
+
+# We test jessie (the default)
+test:pi:
+  tags:
+    - pi
+
+  script:
+    - py.test
